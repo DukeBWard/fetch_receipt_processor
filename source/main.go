@@ -6,6 +6,7 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// driver function
 func main() {
 	router := chi.NewRouter()
 
