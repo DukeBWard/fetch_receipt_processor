@@ -12,6 +12,7 @@ import (
 	"math"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func calcPoints(receipt Receipt) int {
@@ -54,6 +55,29 @@ func calcPoints(receipt Receipt) int {
 			points += int(math.Ceil(price * 0.2))
 		}
 	}
+
+	// 6 points if day is odd
+	// go handles date and time formats weirdly
+	date, err := time.Parse("2006-01-02", receipt.PurchaseDate)
+	if err != nil {
+		println("Error parsing date:", err)
+	}
+
+	if date.Day()%2 == 1 {
+		points += 6
+	}
+
+	// 10 points if time is between 2pm and 4pm
+	time, err := time.Parse("15:04", receipt.PurchaseTime)
+	if err != nil {
+		println("Error parsing time:", err)
+	}
+
+	if time.Hour() >= 14 && time.Hour() < 16 {
+		points += 10
+	}
+
+	return points
 
 }
 
