@@ -24,10 +24,11 @@ func postReceiptHandler(w http.ResponseWriter, r *http.Request) {
 	// generate a unique id for the receipt
 	id := uuid.New().String()
 	receipt.ID = id
-	receipts[id] = receipt
 
 	// TODO: calculate points
 	receipt.Points = calcPoints(receipt)
+
+	receipts[id] = receipt
 
 	res := map[string]string{"id": id}
 	w.Header().Set("Content-Type", "application/json")

@@ -77,6 +77,7 @@ func calcPoints(receipt Receipt) int {
 		points += 10
 	}
 
+	println("Points:", points)
 	return points
 
 }
