@@ -11,6 +11,7 @@ package main
 import (
 	"math"
 	"strconv"
+	"strings"
 )
 
 func calcPoints(receipt Receipt) int {
@@ -25,6 +26,9 @@ func calcPoints(receipt Receipt) int {
 
 	// total to float
 	total, err := strconv.ParseFloat(receipt.Total, 64)
+	if err != nil {
+		println("Error parsing total:", err)
+	}
 
 	// 50 points if total is a whole number
 	if total == float64(int(total)) {
@@ -39,4 +43,20 @@ func calcPoints(receipt Receipt) int {
 	// 5 points for every 2 items
 	points += (len(receipt.Items) / 2) * 5
 
+	// if item desc length is multiple of 3
+	for _, item := range receipt.Items {
+		desc := strings.TrimSpace(item.ShortDescription)
+		if len(desc)%3 == 0 {
+			price, err := strconv.ParseFloat(item.Price, 64)
+			if err != nil {
+				price = 0.0
+			}
+			points += int(math.Ceil(price * 0.2))
+		}
+	}
+
+}
+
+func isAlphanumeric(char rune) bool {
+	return (char >= '0' && char <= '9') || (char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z')
 }
