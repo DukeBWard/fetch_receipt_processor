@@ -11,6 +11,7 @@ Fetch Take Home Assessment
 
 # POST
 `curl -X POST http://localhost:8080/receipts/process    -H 'Content-Type: application/json'    -d '{
+     "userId": "1",
      "retailer": "Target",
      "purchaseDate": "2022-01-01",
      "purchaseTime": "13:01",

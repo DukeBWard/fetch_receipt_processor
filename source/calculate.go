@@ -15,8 +15,16 @@ import (
 	"time"
 )
 
-func calcPoints(receipt Receipt) int {
+func calcPoints(receipt Receipt, user User) int {
 	points := 0
+
+	if user.ReceiptCount == 1 {
+		points += 1000
+	} else if user.ReceiptCount == 2 {
+		points += 500
+	} else if user.ReceiptCount == 3 {
+		points += 250
+	}
 
 	// 1 point for every alphanumeric character in the retailer name
 	for _, char := range receipt.Retailer {
