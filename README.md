@@ -3,7 +3,6 @@ Fetch Take Home Assessment
 
 # dependencies
 - go
-- docker
 
 # running the api
 1. `go mod tidy`
