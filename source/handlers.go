@@ -17,6 +17,7 @@ func postReceiptHandler(w http.ResponseWriter, r *http.Request) {
 
 	var receipt Receipt
 	var user User
+
 	err := json.NewDecoder(r.Body).Decode(&receipt)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -26,9 +27,14 @@ func postReceiptHandler(w http.ResponseWriter, r *http.Request) {
 	// generate a unique id for the receipt
 	id := uuid.New().String()
 	receipt.ID = id
-	user.ID = receipt.userId
+	//user.ID = receipt.UserID
 
-	user = users[user.ID]
+	// increment receipt count for the user
+	user, ok := users[receipt.UserID]
+	if !ok {
+		user = User{ID: receipt.UserID}
+	}
+
 	user.ReceiptCount += 1
 
 	// TODO: calculate points

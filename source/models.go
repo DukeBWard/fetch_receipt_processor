@@ -2,7 +2,7 @@ package main
 
 type Receipt struct {
 	ID           string `json:"id"`
-	userId       string `json:"userId"`
+	UserID       string `json:"userId"`
 	Retailer     string `json:"retailer"`
 	PurchaseDate string `json:"purchaseDate"`
 	PurchaseTime string `json:"purchaseTime"`
@@ -17,6 +17,6 @@ type Item struct {
 }
 
 type User struct {
-	ID           string `json:"id"`
-	ReceiptCount int    `json:"receiptCount"`
+	ID           string
+	ReceiptCount int
 }
