@@ -38,7 +38,11 @@ func postReceiptHandler(w http.ResponseWriter, r *http.Request) {
 	user.ReceiptCount += 1
 
 	// TODO: calculate points
-	receipt.Points = calcPoints(receipt, user)
+	receipt.Points, err = calcPoints(receipt, user)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	users[user.ID] = user
 	receipts[id] = receipt

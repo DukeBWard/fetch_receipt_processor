@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-func calcPoints(receipt Receipt, user User) int {
+func calcPoints(receipt Receipt, user User) (int, error) {
 	points := 0
 
 	if user.ReceiptCount == 1 {
@@ -37,6 +37,7 @@ func calcPoints(receipt Receipt, user User) int {
 	total, err := strconv.ParseFloat(receipt.Total, 64)
 	if err != nil {
 		println("Error parsing total:", err)
+		return 0, err
 	}
 
 	// 50 points if total is a whole number
@@ -69,6 +70,7 @@ func calcPoints(receipt Receipt, user User) int {
 	date, err := time.Parse("2006-01-02", receipt.PurchaseDate)
 	if err != nil {
 		println("Error parsing date:", err)
+		return 0, err
 	}
 
 	if date.Day()%2 == 1 {
@@ -79,6 +81,7 @@ func calcPoints(receipt Receipt, user User) int {
 	time, err := time.Parse("15:04", receipt.PurchaseTime)
 	if err != nil {
 		println("Error parsing time:", err)
+		return 0, err
 	}
 
 	if time.Hour() >= 14 && time.Hour() < 16 {
@@ -86,7 +89,7 @@ func calcPoints(receipt Receipt, user User) int {
 	}
 
 	//println("Points:", points)
-	return points
+	return points, nil
 
 }
 
